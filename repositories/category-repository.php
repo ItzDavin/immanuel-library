@@ -24,3 +24,18 @@ function getCategory()
 
   return $category;
 }
+
+function isCategoryExits($categoryId)
+{
+  global $pdo;
+  $query = "select count(id) from categories where id = :category_id";
+
+  $stmt = $pdo->prepare($query);
+  $stmt->execute([
+    'category_id' => $categoryId
+  ]);
+
+  $isCategoryExits = $stmt->fetchColumn() > 0;
+
+  return $isCategoryExits;
+}
